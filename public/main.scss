@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+@import url('/colors.css');
+
+body {
+
+    height: 75vh;
+
+    overflow: hidden;
+
+    margin: 2.5%;
+    background-color: var(--background);
+    font-family: 'Noto Sans KR', sans-serif;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    color: var(--cursor);
+
+    user-select: none;
+
+    text-align: center;
+
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: lighter;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+.label {
+    margin-bottom: 0.5%;
+}
+
+.content {
+    margin-top: 0px;
+}
+
+.spacer {
+    height: 2.5%;
+    width: 100%;   
+}
+
+#error {
+    color: rgb(255, 95, 95);
+}
+
+#query {
+    color: var(--color15);
+
+    font-style: italic;
+    text-align: center;
+
+    border: none;
+    outline: none;
+    background: none;
+
+    width: 90vw;
+
+}
+
+#infoContent {
+
+    z-index: 10;
+
+    position: absolute;
+    padding: 2.5%;
+
+    background-color: var(--foreground);
+    color: var(--background);
+
+    border-radius: 25px;
+
+}
+
+a {
+
+    cursor: pointer;
+
+    height: 2vh;
+    height: 2vh;
+
+    z-index: 20;
+
+    color: var(--foreground);
+    background-color: var(--background);
+
+    padding: 1.5%;
+
+    border-radius: 5px;
+
+    border: 2.5px solid var(--foreground);
+
+    transition: color 0.2s;
+
+    &:hover {
+        color: var(--color3)
+    }
+}
+
+#closeInfo {
+    // position: absolute;
+    margin-left: 55vw;
+}
+
+#openInfo {
+
+    padding: 1%;
+
+    position: absolute;
+    top: 2.5%;
+    right: 2.5%;
+}
