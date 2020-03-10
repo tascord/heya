@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <title>Home!</title>
+</head>
+<body onload="load()">
+    
+    <h1 id="title">Heya!</h1>
+
+    <div class="spacer"></div>
+
+    <h3 class="label">right now, its the</h3>
+    <h3 class="content" id="time">...</h3>
+
+    <a id="openInfo" onclick="toggleInfo()">i</a>
+
+    <div id="infoContent" style="visibility: hidden;">
+
+        <a id="closeInfo" onclick="toggleInfo()">x</a>
+
+        <h2>Hey There!</h2>
+        <p>
+            If you're new to the Home Screen, theres a couple things you can do with it to make getting around a tad easier!<br>
+
+            <h3>Shorthand</h3>
+            Did you know that you can set shorthand, so instead of typing 'youtube.com', you could just type '/y' or '/yt', or even '/takemetoyoutubeplease'?<br>
+            Well, you can!<br>
+
+            By searching '/YourShorthandHere=TheLongURL', you can set shorthands.<br>
+            For example: '/t=https://twitter.com/'!<br>
+
+            To use these, you can run the bit before the equals sign.<br>
+            So for my example, '/t'!<br>
+
+            
+        </p>
+    </div>
+
+    <form action="#" onsubmit="handleQuery()">
+        <input type="text" id="query" autocomplete="off" autofocus="true" onfocusout="refocus()" placeholder="... type to begin searching ..."></input>
+    </form>
+
+    <script>
+    
+    var shorthand;
+
+    function load() {
+
+        setInterval(() => {
+            document.getElementById('time').innerText = moment().format('Do [of] MMMM YYYY, h:mm:ss a');
+        });
+
+    }
+
+    function refocus() {
+        document.getElementById('query').focus();
+    }
+
+    function handleQuery() {
+
+        console.log('\nNew Query!')
+
+        shorthand = localStorage.getItem('shortHand');
+        if(shorthand == null) {
+            shorthand = [];
+            localStorage.setItem('shortHand', JSON.stringify(shorthand));
+        } else {
+            shorthand = JSON.parse(shorthand);
+        }
+
+        var query = document.getElementById('query').value;
+        if(query == null) return console.log("Empty query, skipping...");
+
+        if(query.match(/\/[A-z0-9_\-.]+=.+/g) != null) {
+            console.log('Query is a shorthand setter');
+
+            if(!query.trim().split('=').slice(1).join('=')) return document.getElementById('query').value = "No URL provided. Use '/prefix=rm' to remove";
+
+            var _shorthand = [];
+            for(var i in shorthand) if(shorthand[i].query != query) _shorthand.push(shorthand[i]);
+            shorthand = _shorthand;
+
+            if(query.trim().split('=').slice(1).join('=') != 'rm') shorthand.push({query: query.trim().split('=')[0], url: query.trim().split('=').slice(1).join('=')});
+            localStorage.setItem('shortHand', JSON.stringify(shorthand));
+
+            console.log(`New shorthand.\n${query.trim().split('=')[0]} ~> ${query.trim().split('=').slice(1).join('=')}`);
+
+            return document.getElementById('query').value = `Set: ${query.trim().split('=')[0]} ~> ${query.trim().split('=').slice(1).join('=')}`;
+        }
+
+        if(query.match(/\/[A-z0-9_\-.]*/g) != null) {
+            
+            console.log('Query is shorthand.')
+
+            var redirect = null;
+
+            for(var i in shorthand) {
+                if(shorthand[i].query == query) redirect = shorthand[i].url;
+            }
+
+            if(redirect == null) return console.log('No shorthand found with given query.');
+
+            document.getElementById('query').value = `Heading to ${redirect}`;
+            window.location = redirect;
+            return;
+
+        }
+
+        if  (query.indexOf("www.") > -1 ||
+             query.indexOf('.com') > -1 ||
+             query.indexOf('.ai') > -1  ||
+             query.indexOf('.ga') > -1  ||
+             query.indexOf('.org') > -1  ||
+             query.indexOf('.net') > -1 ||
+             query.indexOf('.int') > -1 ||
+             query.indexOf('.edu') > -1 ||
+             query.indexOf('.gov') > -1 ||
+             query.indexOf('.tv') > -1 ||
+             query.indexOf('file://') > -1)
+        {
+            
+            if(query.indexOf("http://") > -1 || query.indexOf("https://") > -1 || query.indexOf('file://') > -1) {
+                return window.location = query;
+            }
+
+            return window.location = "http://" + query; //Most secure websites should auto redirect to https://
+
+        }
+
+        window.location = `https://duckduckgo.com/?q=${query}`;
+
+    }
+
+    function toggleInfo() {
+
+        if(document.getElementById('infoContent').style.visibility != 'hidden') {
+            document.getElementById('infoContent').style.visibility = 'hidden';
+        } else {
+            document.getElementById('infoContent').style.visibility = 'visible';
+        }
+
+    }
+
+    </script>
+
+</body>
+</html>
