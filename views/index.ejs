@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="p/style/main.css">
+    <title>Heya!</title>
+</head>
+<body>
+    
+    <div id="container" class="idle">
+        
+        <h1>Heya!</h1>
+        <h3>Right now its <%= moment().format('hh:MM a') %>, one <%= weather %> <%= day_night %> in <%= moment().format("MMMM").toLowerCase()  %>...</h3>
+    
+        <!-- <h3>Class wise, [your done / up next is]!</h3> -->
+    
+        <h3>The regulars?</h3>
+        <div id="regulars"></div>
+    
+        <form id="search">
+            <input type="text" id="query" autocomplete="off" autofocus>
+        </form>
+        
+    </div>
+    
+    <script>
+        
+        //URL Regex is a bad bad cringe cringe idiot dumb brain website
+        const url_match = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+
+        let cleanQuery = q => {
+            let matches = q.match(url_match);
+            return matches[2].replace(matches[3], '').replace(/^ww.\./, '');
+        }
+
+        let getKey = q => {
+
+            let url = cleanQuery(q);
+
+            for (let i = 0; i < localStorage.length; i++) if(localStorage.key(i).indexOf(url) > -1) return localStorage.getItem(url);
+            return null;
+
+        }
+
+        /* ——————— BARPOPUP ——————— */
+
+        document.getElementById('search').onclick = () => { document.getElementById('search').classList.remove('active'); document.getElementById('search').classList.add('idle'); }
+
+        document.body.onkeypress = e => {
+
+            let _ = document.getElementById('search');
+            
+            if(_.classList.contains('active') || !e.key.match(/[A-z0-9]{1}/)) return;
+            if(e.key.match(/[A-z0-9]{1}/) != e.key) return;
+
+            _.classList.add('active');
+            _.classList.remove('idle');
+            
+            let q = document.getElementById('query');
+
+            q.focus();
+            q.value += e.key;
+
+        }
+
+        /* ——————— SEARCHES ——————— */
+
+        document.getElementById('search').onsubmit = e => {
+
+            e.preventDefault();
+
+            document.getElementById('container').classList.add('go');
+
+            let query = document.getElementById('query').value;
+            if(!query.match(url_match)) `https://duckduckgo.com/?q=${query}`;
+            else {
+                
+                if(typeof(Storage) === undefined) return window.location = window.location = query;
+
+                if(isNaN(parseInt(getKey(query)))) localStorage.setItem(cleanQuery(query), 1);
+                else {
+
+                    let _ = getKey(query);
+                    _ = Number(_) + 1;
+                    localStorage.setItem(cleanQuery(query), _);
+
+                }
+                
+                // window.location = window.location = query;
+
+            }
+
+            return false;
+
+        }
+
+        /* ——————— REGULARS ——————— */
+
+        if(!localStorage.getItem('heya-<%= version %>')) {
+
+            localStorage.setItem('heya-<%= version %>', 'o/');
+
+            //Default Sites
+            [
+                'https://duckduckgo.com',
+                'https://stackoverflow.com/',
+                'https://www.npmjs.com/',
+                'https://discord.com/',
+                'https://canary.discord.com/',
+                'https://youtube.com/',
+                'https://open.spotify.com/'
+            ].forEach(i => localStorage.setItem(cleanQuery(i), 1));
+
+        }
+
+        let regulars = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            
+            let url = localStorage.key(i);
+            let visits = localStorage.getItem(url);
+
+            if(isNaN(parseInt(visits))) continue;
+
+            regulars.push({
+                url: url,
+                visits: visits
+            });
+            
+        }
+
+        regulars.sort((a, b) => b.visits - a.visits).slice(0, 7).forEach(e => {
+
+            let _ = document.createElement('a');
+            document.getElementById('regulars').appendChild(_);
+            
+            _.innerText = e.url;
+            _.href = 'https://' + e.url;
+
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
+* {
+  font-family: 'Alata', sans-serif;
+}
+
+body {
+  margin: 0%;
+  padding: 0%;
+}
+
+#container {
+  margin: 0%;
+  padding: 0%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: linear-gradient(-45deg, #23a6d5, #23d5ab);
+  background-size: 400%;
+  -webkit-animation: slide-in 2s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+          animation: slide-in 2s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+}
+
+#container.go {
+  -webkit-animation: slide-out 0.5s cubic-bezier(1, 0.24, 0.41, 1) forwards;
+          animation: slide-out 0.5s cubic-bezier(1, 0.24, 0.41, 1) forwards;
+}
+
+h1, h2, h3 {
+  color: white;
+}
+
+h1 {
+  font-size: 400%;
+  padding: 0;
+  margin: 0;
+}
+
+h3 {
+  font-size: 150%;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 2%;
+}
+
+#regulars {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#regulars a {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 21%;
+          flex: 1 0 21%;
+  margin: 5px;
+  height: auto;
+  text-align: center;
+  text-decoration: none;
+  color: #61fff7;
+}
+
+#search {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  place-items: center;
+  background: #252525a9;
+  opacity: 0;
+}
+
+#search.active {
+  display: -ms-grid;
+  display: grid;
+  -webkit-animation: fade-in 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+          animation: fade-in 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+}
+
+#search.idle {
+  display: -ms-grid;
+  display: grid;
+  -webkit-animation: fade-out 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+          animation: fade-out 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+}
+
+#search #query {
+  width: 70%;
+  text-align: center;
+  background: none;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: xx-large;
+}
+
+@-webkit-keyframes slide-in {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+
+* { font-family: 'Alata', sans-serif; }
+
+body {
+    margin: 0%;
+    padding: 0%;
+}
+
+#container {
+
+    margin: 0%;
+    padding: 0%;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+	background: linear-gradient(-45deg, #23a6d5, #23d5ab);
+    background-size: 400%;
+
+    animation: slide-in 2s cubic-bezier(.56,.14,.26,.88) forwards;
+
+    &.go { animation: slide-out 0.5s cubic-bezier(1,.24,.41,1) forwards; }
+
+}
+
+h1, h2, h3 {
+
+    // mix-blend-mode: difference;
+    color: white;
+
+}
+
+h1 {
+    font-size: 400%;
+    padding: 0;
+    margin: 0;
+}
+
+h3 {
+    font-size: 150%;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2%;
+}
+
+#regulars {
+
+    display: flex;
+    flex-wrap: wrap;
+
+    a {
+
+        flex: 1 0 21%;
+        margin: 5px;
+        height: auto;
+        text-align: center;
+        text-decoration: none;
+        color: #61fff7;
+
+    }
+
+}
+
+#search {
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+    place-items: center;
+
+    background: #252525a9;
+
+    opacity: 0;
+
+    &.active {
+        display: grid;
+        animation: fade-in 0.5s cubic-bezier(.56,.14,.26,.88) forwards;
+    }
+
+    &.idle {
+        display: grid;
+        animation: fade-out 0.5s cubic-bezier(.56,.14,.26,.88) forwards;
+    }
+
+    #query {
+
+        width: 70%;
+        text-align: center;
+
+        background: none;
+        outline: none;
+        border: none;
+
+        color: white;
+        font-size: xx-large;
+
+
+    }
+    
+
+}
+
+@keyframes slide-in {
+
+    0%   { background-position: 0% 50%;   }
+	100% { background-position: 100% 50%; }
+
+}
+
+@keyframes slide-out {
+
+    0%   { background-position: 100% 50%; }
+    100% { background-position: 0% 50%;   }
+
+}
+
+@keyframes fade-in {
+
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+
+}
+
+@keyframes fade-out {
+
+    0%   { opacity: 1; }
+    100% { opacity: 0; display: none; }
+
+}
