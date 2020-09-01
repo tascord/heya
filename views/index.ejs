@@ -19,7 +19,8 @@
         <div id="regulars"></div>
     
         <form id="search">
-            <input type="text" id="query" autocomplete="off" autofocus>
+            <sub id="initial-warn">URL's must include a protocol. http / https.</sub>
+            <input type="text" id="query" autocomplete="off">
         </form>
         
     </div>
@@ -45,24 +46,23 @@
 
         /* ——————— BARPOPUP ——————— */
 
-        document.getElementById('search').onclick = () => { document.getElementById('search').classList.remove('active'); document.getElementById('search').classList.add('idle'); }
-
-        document.body.onkeypress = e => {
+        document.getElementById('query').addEventListener('blur', () => { document.getElementById('search').classList.remove('active'); document.getElementById('search').classList.add('idle'); });
+        document.body.addEventListener('keypress', e => {
 
             let _ = document.getElementById('search');
             
             if(_.classList.contains('active') || !e.key.match(/[A-z0-9]{1}/)) return;
             if(e.key.match(/[A-z0-9]{1}/) != e.key) return;
-
+            
             _.classList.add('active');
             _.classList.remove('idle');
             
             let q = document.getElementById('query');
-
-            q.focus();
             q.value += e.key;
+            q.focus();
+            
 
-        }
+        });
 
         /* ——————— SEARCHES ——————— */
 
@@ -73,10 +73,10 @@
             document.getElementById('container').classList.add('go');
 
             let query = document.getElementById('query').value;
-            if(!query.match(url_match)) `https://duckduckgo.com/?q=${query}`;
+            if(!query.match(url_match)) window.location = `https://duckduckgo.com/?q=${query}`;
             else {
                 
-                if(typeof(Storage) === undefined) return window.location = window.location = query;
+                if(typeof(Storage) === undefined) return window.location = query;
 
                 if(isNaN(parseInt(getKey(query)))) localStorage.setItem(cleanQuery(query), 1);
                 else {
@@ -87,7 +87,7 @@
 
                 }
                 
-                // window.location = window.location = query;
+                window.location = window.location = query;
 
             }
 
@@ -112,6 +112,8 @@
                 'https://open.spotify.com/'
             ].forEach(i => localStorage.setItem(cleanQuery(i), 1));
 
+        } else {
+            document.getElementById('initial-warn').style.display = 'none';
         }
 
         let regulars = [];

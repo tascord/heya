@@ -76,21 +76,29 @@ h3 {
     width: 100%;
     height: 100%;
 
-    display: none;
-    place-items: center;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     background: #252525a9;
 
     opacity: 0;
+    visibility: hidden;
 
     &.active {
-        display: grid;
         animation: fade-in 0.5s cubic-bezier(.56,.14,.26,.88) forwards;
+        #query { visibility: visible; }
+    }
+    
+    &.idle {
+        animation: fade-out 0.5s cubic-bezier(.56,.14,.26,.88) forwards;
     }
 
-    &.idle {
-        display: grid;
-        animation: fade-out 0.5s cubic-bezier(.56,.14,.26,.88) forwards;
+    sub {
+        margin-bottom: 1%;
+        color: #ffffff9f;
     }
 
     #query {
@@ -127,14 +135,14 @@ h3 {
 
 @keyframes fade-in {
 
-    0%   { opacity: 0; }
-    100% { opacity: 1; }
+    0%   { opacity: 0; visibility: hidden;  }
+    100% { opacity: 1; visibility: visible; }
 
 }
 
 @keyframes fade-out {
 
-    0%   { opacity: 1; }
-    100% { opacity: 0; display: none; }
+    0%   { opacity: 1; visibility: visible; }
+    100% { opacity: 0; visibility: hidden;  }
 
 }

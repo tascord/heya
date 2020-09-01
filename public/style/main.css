@@ -78,24 +78,41 @@ h3 {
   position: absolute;
   width: 100%;
   height: 100%;
-  display: none;
-  place-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   background: #252525a9;
   opacity: 0;
+  visibility: hidden;
 }
 
 #search.active {
-  display: -ms-grid;
-  display: grid;
   -webkit-animation: fade-in 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
           animation: fade-in 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
 }
 
+#search.active #query {
+  visibility: visible;
+}
+
 #search.idle {
-  display: -ms-grid;
-  display: grid;
   -webkit-animation: fade-out 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
           animation: fade-out 0.5s cubic-bezier(0.56, 0.14, 0.26, 0.88) forwards;
+}
+
+#search sub {
+  margin-bottom: 1%;
+  color: #ffffff9f;
 }
 
 #search #query {
@@ -147,38 +164,44 @@ h3 {
 @-webkit-keyframes fade-in {
   0% {
     opacity: 0;
+    visibility: hidden;
   }
   100% {
     opacity: 1;
+    visibility: visible;
   }
 }
 
 @keyframes fade-in {
   0% {
     opacity: 0;
+    visibility: hidden;
   }
   100% {
     opacity: 1;
+    visibility: visible;
   }
 }
 
 @-webkit-keyframes fade-out {
   0% {
     opacity: 1;
+    visibility: visible;
   }
   100% {
     opacity: 0;
-    display: none;
+    visibility: hidden;
   }
 }
 
 @keyframes fade-out {
   0% {
     opacity: 1;
+    visibility: visible;
   }
   100% {
     opacity: 0;
-    display: none;
+    visibility: hidden;
   }
 }
 /*# sourceMappingURL=main.css.map */
