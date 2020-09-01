@@ -5,7 +5,7 @@ const version     = '0.2.0';
 const port        = 1234;
 
 //WILL API LIMIT IF RESTARTING OFTEN
-const development = true;
+const development = false;
 
 /* ——————— MODULES ———————— */
 
@@ -21,7 +21,7 @@ const request = require('request');
 /* ———————— SERVER ———————— */
 const app  = require('express')();
 const http = require('http').createServer(app);
-http.listen(port, console.log('Server Started!'));
+http.listen(process.env.PORT || port, console.log('Server Started!'));
 
 /* ——————— REQUESTS ——————— */
 
