@@ -1,7 +1,8 @@
 /* ———————— CONFIG ———————— */
 
 const weather_api = ' -- Your OpenWeather API Key -- ';
-const version = '0.2.0';
+const version     = '0.2.0';
+const port        = 1234;
 
 //WILL API LIMIT IF RESTARTING OFTEN
 const development = true;
@@ -13,15 +14,14 @@ let current_class = {poll: 0, message: null};
 
 /* ——————— MODULES ———————— */
 
-const fs = require('fs');
-const moment = require('moment');
-const ip = require('externalip');
+const fs      = require('fs');
+const moment  = require('moment');
 const request = require('request');
 
 /* ———————— SERVER ———————— */
-const app = require('express')();
+const app  = require('express')();
 const http = require('http').createServer(app);
-http.listen(1234, console.log('Server Started!'));
+http.listen(port, console.log('Server Started!'));
 
 /* ——————— REQUESTS ——————— */
 

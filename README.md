@@ -4,8 +4,8 @@ A neat little home page for your browser.
 ## How to run
 1) Clone, and then head into this projects local folder.
 2) Run `npm install` from your choice of command line.
-3) Configure everything at the top of the index.js file, and run with `npm start`
-4) Set, either through it's settings, or extentions, your browsers homepage to localhost:port, where port is the port you specified in the config part.
+3) Configure everything at the top of the index.js file, and run with `npm start`.
+4) Set, either through it's settings, or extentions, your browsers homepage to `localhost:port`, where port is the port you specified in the config part.
 
 ## Want something?
 This project isn't going to be super actively maintained, I'm just using this for my home page, but feel free to submit an issue, clearly labeling it as a feature request. I might add a specific feature-request template later on.
