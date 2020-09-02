@@ -34,7 +34,7 @@ app.get('*', (req, res) => {
     if(path.startsWith('p/')) {
         
         path = path.slice(2);
-        if(fs.existsSync(`./public/${path}`)) res.sendFile(__dirname + `/public/${path}`);
+        if(fs.existsSync(__dirname + `/public/${path}`)) res.sendFile(__dirname + `/public/${path}`);
         else res.status(404).end();
         
     } else {
@@ -48,7 +48,7 @@ app.get('*', (req, res) => {
         else if (day_night < 12 + 9  ) day_night = 'evening';
         else if (day_night < 12 + 12 ) day_night = 'night';
 
-        if(fs.existsSync(`./views/${path}.ejs`)) res.render(__dirname + `/views/${path}.ejs`, {weather: weather.message, version: version, day_night: day_night});
+        if(fs.existsSync(__dirname + `/views/${path}.ejs`)) res.render(__dirname + `/views/${path}.ejs`, {weather: weather.message, version: version, day_night: day_night});
         else res.send('404');
         
     }
@@ -62,12 +62,13 @@ let updateWeather = () => {
     weather.message = "develop-y"
     if(development) return; //Dont send whilst developing.
 
+    //TODO: Catch Invalid JSON Parsing
     request(`https://ipinfo.io/`, (err, resp, body) => {
         
         if(err && !weather.message) weather.message = 'uh,, ';
         let [lat, lon] = JSON.parse(body).loc.split(',');
         
-        request(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weather_api}`, (err, resp, body) => {
+        request(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weather_api || process.env.API_KEY}`, (err, resp, body) => {
 
             if(err && !weather.message) weather.message = 'uh,, ';
             weather.poll = Date.now();
